@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order Complete - Chai Chenak Restaurant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Thank You for Your Order!</h1>
+        <p>Your order number is: <strong>{{ order_number }}</strong></p>
+        <p>We appreciate your business and hope to see you again soon!</p>
+        <p><a href="/" class="btn">Return to Home</a></p>
+    </div>
+</body>
+</html>

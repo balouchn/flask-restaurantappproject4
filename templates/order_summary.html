@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order Summary - Chai Chenak Restaurant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="summary-container">
+            <div class="order-header">
+                <h1>Order Summary</h1>
+                <p><strong>Order Number:</strong> {{ order_number }}</p>
+                <p><strong>Date/Time:</strong> {{ order_date }}</p>
+                <p><strong>Customer:</strong> {{ customer_name }}</p>
+                <p><strong>Address:</strong> {{ customer_address }}</p>
+                <p><strong>Phone:</strong> {{ customer_phone }}</p>
+                <p><strong>Delivery Option:</strong> {{ delivery_option|capitalize }}</p>
+            </div>
+
+            <div class="order-items">
+                <h2>Items Ordered:</h2>
+                {% for item in summary %}
+                <div class="order-item">
+                    <span>{{ item.name }} (x{{ item.quantity }})</span>
+                    <span>${{ "%.2f"|format(item.total_price) }}</span>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="totals">
+                <div class="total-row">
+                    <span>Subtotal:</span>
+                    <span>${{ "%.2f"|format(subtotal) }}</span>
+                </div>
+
+                {% if discount > 0 %}
+                <div class="total-row discount">
+                    <span>Discount:</span>
+                    <span>-${{ "%.2f"|format(discount) }}</span>
+                </div>
+                <div class="total-row">
+                    <span>Amount after discount:</span>
+                    <span>${{ "%.2f"|format(amount_after_discount) }}</span>
+                </div>
+                {% endif %}
+
+                <div class="total-row">
+                    <span>Tax (6.625%):</span>
+                    <span>${{ "%.2f"|format(tax) }}</span>
+                </div>
+
+                <div class="total-row">
+                    <span>Tip ({{ tip_percentage }}%):</span>
+                    <span>${{ "%.2f"|format(tip) }}</span>
+                </div>
+
+                {% if delivery_fee > 0 %}
+                <div class="total-row">
+                    <span>Delivery Fee:</span>
+                    <span>${{ "%.2f"|format(delivery_fee) }}</span>
+                </div>
+                {% endif %}
+
+                <div class="grand-total">
+                    <span>TOTAL:</span>
+                    <span>${{ "%.2f"|format(total) }}</span>
+                </div>
+            </div>
+
+            <h2>Thank you for your order!</h2>
+            <p>Your order has been placed successfully.</p>
+
+            <button onclick="window.print()" class="btn">Print Receipt</button>
+
+            <p><a href="/" class="btn">Return to Home</a></p>
+
+            {{ session.pop('order_number', None) }}
+            {{ session.pop('coupon_type', None) }}
+            {{ session.pop('coupon_value', None) }}
+            {{ session.pop('tip_percentage', None) }}
+            {{ session.pop('delivery_option', None) }}
+        </div>
+    </div>
+</body>
+</html>

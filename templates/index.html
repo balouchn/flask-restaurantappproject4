@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome to Chai Chenak Restaurant</title>
+        <title>Your Page Title</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Chai Chenak Restaurant</h1>
+            <p class="tagline">Authentic Pakistani Cuisine</p>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <a href="/">Home</a>
+            <a href="/start_order">Start New Order</a>
+            <a href="/admin">Admin Panel</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section>
+            <h2>Welcome to Chai Chenak Restaurant</h2>
+            <p>Experience the rich and vibrant flavors of Pakistani cuisine at Chai Chenak Restaurant. From savory appetizers to delicious entrées and sweet desserts, we offer a wide range of authentic dishes prepared with love and traditional spices.</p>
+        </section>
+
+        <section class="featured">
+            <div class="featured-item">
+                <h3>Appetizers</h3>
+                <p>Start your meal with our delicious appetizers like Aloo Samosa, Channa Papri Chat, and more!</p>
+            </div>
+            <div class="featured-item">
+                <h3>Main Courses</h3>
+                <p>Try our signature dishes including Chicken Sindhi Biryani, Balochi Tikka Karahi, and Mutton Karahi.</p>
+            </div>
+            <div class="featured-item">
+                <h3>Desserts</h3>
+                <p>Complete your meal with our sweet treats like Special Badshahi Falooda, Kulfi Dandiwali, or Gulab Jamun.</p>
+            </div>
+        </section>
+
+        <div class="cta">
+            <h2>Hungry? Order Now!</h2>
+            <p>Place your order for pickup or delivery and enjoy our delicious food at home.</p>
+            <a href="/start_order" class="btn">Start Order</a>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Chai Chenak Restaurant. Project by Noorulain Balouch.</p>
+        </div>
+    </footer>
+</body>
+</html>

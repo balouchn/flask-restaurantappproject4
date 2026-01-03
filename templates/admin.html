@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Panel - Chai Chenak Restaurant</title>
+    <title>Your Page Title</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>Admin Panel - Chai Chenak Restaurant</h1>
+
+    <h2>Insert New Menu Item</h2>
+    <form method="post" action="/admin/add_item">
+      <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+
+      <div>
+        <label for="category">Category:</label>
+        <select id="category" name="category" required>
+          <option value="Appetizer">Appetizer</option>
+          <option value="Entree">Entree</option>
+          <option value="Dessert">Dessert</option>
+          <option value="Beverage">Beverage</option>
+          <option value="Fries">Fries</option>
+          <option value="Rolls">Rolls</option>
+          <option value="Soft Drinks">Soft Drinks</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="price">Price:</label>
+        <input type="number" id="price" name="price" step="0.01" min="0" required>
+      </div>
+
+      <div>
+        <label for="description">Description:</label>
+        <input type="text" id="description" name="description" required>
+      </div>
+
+      <input type="submit" value="Add Item">
+    </form>
+
+    <h2>Current Menu</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Price</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in menu %}
+        <tr>
+          <td>{{ item['menu_id'] }}</td>
+          <td>{{ item['name'] }}</td>
+          <td>{{ item['category'] }}</td>
+          <td>${{ "%.2f"|format(item['price']) }}</td>
+          <td>{{ item['description'] }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <h2>Customers</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Address</th>
+          <th>Phone</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for customer in customers %}
+        <tr>
+          <td>{{ customer['customer_id'] }}</td>
+          <td>{{ customer['name'] }}</td>
+          <td>{{ customer['street_address'] }}, {{ customer['city'] }}, {{ customer['state'] }} {{ customer['zip_code'] }}</td>
+          <td>{{ customer['phone_number'] }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <a href="/" class="back">Back to Home</a>
+  </div>
+</body>
+</html>
