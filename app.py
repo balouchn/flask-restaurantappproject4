@@ -3,7 +3,55 @@ import sqlite3
 import os
 from datetime import datetime
 
+def init_db():
+    conn = sqlite3.connect("project4.db")
+    cur = conn.cursor()
+
+    cur.execute("""
+    CREATE TABLE IF NOT EXISTS menu (
+        menu_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT,
+        category TEXT,
+        price REAL,
+        description TEXT
+    )
+    """)
+
+    cur.execute("""
+    CREATE TABLE IF NOT EXISTS customers (
+        customer_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT,
+        street_address TEXT,
+        city TEXT,
+        state TEXT,
+        zip_code TEXT,
+        phone_number TEXT
+    )
+    """)
+
+    cur.execute("""
+    CREATE TABLE IF NOT EXISTS orders (
+        order_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        customer_id INTEGER,
+        order_number TEXT,
+        date_time TEXT
+    )
+    """)
+
+    cur.execute("""
+    CREATE TABLE IF NOT EXISTS order_items (
+        order_item_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        order_number TEXT,
+        menu_id INTEGER,
+        quantity INTEGER
+    )
+    """)
+
+    conn.commit()
+    conn.close()
+
 app = Flask(__name__)
+init_db()
 app.secret_key = "chaiChenakSecret"
 
 def get_db():
@@ -11,35 +59,13 @@ def get_db():
     conn.row_factory = sqlite3.Row
     return conn
 
-def check_db_exists():
-    if not os.path.exists("project4.db"):
-        return False
-
-    try:
-        conn = get_db()
-        cursor = conn.cursor()
-        tables = ["menu", "customers", "orders", "order_items"]
-        for table in tables:
-            cursor.execute(f"SELECT name FROM sqlite_master WHERE type='table' AND name='{table}'")
-            if not cursor.fetchone():
-                conn.close()
-                return False
-        conn.close()
-        return True
-    except Exception as e:
-        print(f"Database check error: {e}")
-        return False
 
 @app.route("/")
 def index():
-    if not check_db_exists():
-        return render_template("db_not_ready.html")
     return render_template("index.html")
 
 @app.route("/admin", methods=["GET", "POST"])
 def admin():
-    if not check_db_exists():
-        return render_template("db_not_ready.html")
 
     conn = get_db()
     cur = conn.cursor()
@@ -68,8 +94,6 @@ def admin():
 
 @app.route("/start_order", methods=["GET", "POST"])
 def start_order():
-    if not check_db_exists():
-        return render_template("db_not_ready.html")
 
     if request.method == "POST":
         conn = get_db()
