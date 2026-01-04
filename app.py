@@ -46,6 +46,22 @@ def init_db():
         quantity INTEGER
     )
     """)
+    # Seed menu data if empty
+    cur.execute("SELECT COUNT(*) FROM menu")
+    count = cur.fetchone()[0]
+
+    if count == 0:
+        cur.executemany("""
+            INSERT INTO menu (name, category, price, description)
+            VALUES (?, ?, ?, ?)
+        """, [
+            ("Samosa", "Appetizers", 4.99, "Crispy potato samosas"),
+            ("Pakora", "Appetizers", 5.99, "Fried vegetable fritters"),
+            ("Butter Chicken", "Entrees", 14.99, "Creamy tomato chicken curry"),
+            ("Chicken Biryani", "Entrees", 13.99, "Spiced rice with chicken"),
+            ("Garlic Naan", "Sides", 3.49, "Fresh baked naan bread")
+        ])
+
 
     conn.commit()
     conn.close()
